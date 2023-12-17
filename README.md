@@ -72,9 +72,10 @@ A Simple HTTP(REST) API to make a dashboard like service for college placement. 
 
 ## More about the API📑
 #### Database Structure
-<img width="281" alt="image" src="https://github.com/ananya-codes/PlacementBuddy/assets/77432683/8bed5140-1793-4711-b0ea-dda02c888b24">
+<img width="381" alt="image" src="https://github.com/ananya-codes/PlacementBuddy/assets/77432683/8bed5140-1793-4711-b0ea-dda02c888b24">
 
 #### Sequence Diagram
+<img width="739" alt="image" src="https://github.com/ananya-codes/PlacementBuddy/assets/77432683/b25e8cd6-aaee-4b56-a2d5-2c81cfaefede">
 
 #### UML Diagram
 
