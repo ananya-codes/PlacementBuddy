@@ -7,6 +7,7 @@ type Company struct {
 	Name    string `json:"name"`
 	Package int    `json:"package"`
 	Selected int `json:"selected"`
+	Ongoing bool `json:"ongoing"`
 }
 
 func main() {
@@ -25,16 +26,16 @@ func main() {
 
 		_, err := ctx.DB().ExecContext(ctx, "DELETE FROM companies WHERE id = (?);", id)
 
-		return nil, err
+		return "successfully deleted", err
 	})
 
-	// ADD NEW COMPANY NAME
+	// ADD NEW COMPANY NAME (default package set 0)
 	app.POST("/company/{name}", func(ctx *gofr.Context) (interface{}, error) {
 		name := ctx.PathParam("name")
 
 		_, err := ctx.DB().ExecContext(ctx, "INSERT INTO companies (name) VALUES (?)", name)
 
-		return nil, err
+		return "successfully company name added, other values set 0 as default", err
 	})
 
 	//ADD NEW COMPANY NAME AND ITS PACKAGE
@@ -44,19 +45,37 @@ func main() {
 
 		_, err := ctx.DB().ExecContext(ctx, "INSERT INTO companies (name, package) VALUES (?, ?)", name, packagee)
 
-		return nil, err
+		return "successfully added name and package", err
 	})
 
 	//ADD NO OF STUDENTS SELECTED BY THE COMPANY
-	app.POST("/company/{id}/{selected}", func(ctx *gofr.Context) (interface{}, error) {
+	app.POST("/selected/{id}/{selected}", func(ctx *gofr.Context) (interface{}, error) {
 		id := ctx.PathParam("id")
 		selected := ctx.PathParam("selected")
 
 		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET selected = (?) WHERE id = (?);",selected, id)
 
-		return nil, err
+		return "successfully updated selected count", err
 	})
-	
+
+	//END COMPANY'S HIRING PROCESS
+	app.POST("/stop/{id}", func(ctx *gofr.Context) (interface{}, error) {
+		id := ctx.PathParam("id")
+
+		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET ongoing = FALSE WHERE id = (?);" ,id)
+
+		return "Drive's end stored", err
+	})
+
+	//RESUME COMPANY'S HIRING PROCESS
+	app.POST("/start/{id}", func(ctx *gofr.Context) (interface{}, error) {
+		id := ctx.PathParam("id")
+
+		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET ongoing = TRUE WHERE id = (?);" ,id)
+
+		return "drive continued", err
+	})
+
 	//DISPLAY COMPANY'S STATUS
 	app.GET("/company", func(ctx *gofr.Context) (interface{}, error) {
 		var companies []Company
@@ -68,7 +87,7 @@ func main() {
 
 		for rows.Next() {
 			var company Company
-			if err := rows.Scan(&company.ID, &company.Name, &company.Package, &company.Selected); err != nil {
+			if err := rows.Scan(&company.ID, &company.Name, &company.Package, &company.Selected, &company.Ongoing); err != nil {
 				return nil, err
 			}
 
@@ -78,6 +97,7 @@ func main() {
 		return companies, nil
 	})
 	
+
 
 	app.Start()
 }
