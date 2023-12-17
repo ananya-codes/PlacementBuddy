@@ -3,11 +3,11 @@ package main
 import "gofr.dev/pkg/gofr"
 
 type Company struct {
-	ID      int    `json:"id"`
-	Name    string `json:"name"`
-	Package int    `json:"package"`
-	Selected int `json:"selected"`
-	Ongoing bool `json:"ongoing"`
+	ID       int    `json:"id"`
+	Name     string `json:"name"`
+	Package  int    `json:"package"`
+	Selected int    `json:"selected"`
+	Ongoing  bool   `json:"ongoing"`
 }
 
 func main() {
@@ -18,15 +18,6 @@ func main() {
 	app.GET("/dashboard", func(ctx *gofr.Context) (interface{}, error) {
 
 		return "Hello students! Welcome to the placement dashboard", nil
-	})
-	
-	//DELETE COMPANY USING ID
-	app.DELETE("/company/{id}", func(ctx *gofr.Context) (interface{}, error){
-		id := ctx.PathParam("id")
-
-		_, err := ctx.DB().ExecContext(ctx, "DELETE FROM companies WHERE id = (?);", id)
-
-		return "successfully deleted", err
 	})
 
 	// ADD NEW COMPANY NAME (default package set 0)
@@ -48,21 +39,30 @@ func main() {
 		return "successfully added name and package", err
 	})
 
-	//ADD NO OF STUDENTS SELECTED BY THE COMPANY
+	//ADD NO OF STUDENTS SELECTED BY THE COMPANY's ID
 	app.POST("/selected/{id}/{selected}", func(ctx *gofr.Context) (interface{}, error) {
 		id := ctx.PathParam("id")
 		selected := ctx.PathParam("selected")
 
-		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET selected = (?) WHERE id = (?);",selected, id)
+		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET selected = (?) WHERE id = (?);", selected, id)
 
 		return "successfully updated selected count", err
+	})
+
+	//DELETE COMPANY USING ID
+	app.DELETE("/company/{id}", func(ctx *gofr.Context) (interface{}, error) {
+		id := ctx.PathParam("id")
+
+		_, err := ctx.DB().ExecContext(ctx, "DELETE FROM companies WHERE id = (?);", id)
+
+		return "successfully deleted", err
 	})
 
 	//END COMPANY'S HIRING PROCESS
 	app.POST("/stop/{id}", func(ctx *gofr.Context) (interface{}, error) {
 		id := ctx.PathParam("id")
 
-		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET ongoing = FALSE WHERE id = (?);" ,id)
+		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET ongoing = FALSE WHERE id = (?);", id)
 
 		return "Drive's end stored", err
 	})
@@ -71,7 +71,7 @@ func main() {
 	app.POST("/start/{id}", func(ctx *gofr.Context) (interface{}, error) {
 		id := ctx.PathParam("id")
 
-		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET ongoing = TRUE WHERE id = (?);" ,id)
+		_, err := ctx.DB().ExecContext(ctx, "UPDATE companies SET ongoing = TRUE WHERE id = (?);", id)
 
 		return "drive continued", err
 	})
@@ -96,8 +96,6 @@ func main() {
 
 		return companies, nil
 	})
-	
-
 
 	app.Start()
 }
