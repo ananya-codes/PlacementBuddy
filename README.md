@@ -1,7 +1,7 @@
 # PlacementBuddy📊
 A Simple HTTP(REST) API to make a dashboard like service for college placement. It helps keep a check of companies coming for recruitment.👩‍💻
 
-## Functionalities
+## Functionalities👾
 #### VIEW
   - `/dashboard`    view Welcome Dashboard 
   
@@ -26,8 +26,7 @@ A Simple HTTP(REST) API to make a dashboard like service for college placement. 
 #### DELETE
   - `/company/{id}`    Delete Company Info from the system using its ID
 
-## Installation
-
+## Installation🛠️
 #### Dependencies : GO, Gofr, Docker, mysql
 1.  #### Install Go modules
    
@@ -55,16 +54,14 @@ A Simple HTTP(REST) API to make a dashboard like service for college placement. 
     
      `go run main.go`
 
-## Testing
-
+## Testing🧪
 #### try out APIs using Postman
 
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://god.gw.postman.com/run-collection/31381553-894c778a-6717-4224-a7e1-a24430b3be3f?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D31381553-894c778a-6717-4224-a7e1-a24430b3be3f%26entityType%3Dcollection%26workspaceId%3D17886b48-98fa-4cdf-972e-614275d26197)
 
 #### Unit Test
 
-## More about the API
-
+## More about the API📑
 #### Database
 <img width="281" alt="image" src="https://github.com/ananya-codes/PlacementBuddy/assets/77432683/8bed5140-1793-4711-b0ea-dda02c888b24">
 
