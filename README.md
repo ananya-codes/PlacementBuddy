@@ -67,6 +67,7 @@ A Simple HTTP(REST) API to make a dashboard like service for college placement. 
 
 #### Unit Test
 
+handler_test.go is made to test few of the functionalities of handler.go
 
 
 
